@@ -123,9 +123,29 @@ var restockItem = function restockItem(item)
         return null;
 }
 
+/**
+ * @brief This function modify the place of an element, given its ID.
+ * @param itemID
+ * @return the item if it is moved, null if the item does not exist
+ */
+var sendItem = function sendItem(item)
+{
+    //search for the element
+    var position = searchPos(item.ID);
+    
+    if (position!=null)
+        {
+            warehouse[position].place[0]=item.placeH;
+            warehouse[position].place[1]=item.placeW;
+            return warehouse[position];
+        }
+    else
+        return null;
+}
 
 //export functions
 exports.getWarehouse = getWarehouse; 
 exports.searchItem = searchItem; 
 exports.sellItem = sellItem; 
-exports.restockItem = restockItem; 
+exports.restockItem = restockItem;
+exports.sendItem = sendItem;
