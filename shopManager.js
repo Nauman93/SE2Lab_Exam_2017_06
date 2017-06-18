@@ -124,23 +124,34 @@ var restockItem = function restockItem(item)
 }
 
 /**
- * @brief This function modify the place of an element, given its ID.
+ * @brief This function send the item to a given place and returns the price, based on the distance
  * @param itemID
  * @return the item if it is moved, null if the item does not exist
  */
-var sendItem = function sendItem(item)
-{
-    //search for the element
-    var position = searchPos(item.ID);
+var sendItem = function sendItem(itemID, placeH, placeW){
+    var position = searchPos(itemID);
     
-    if (position!=null)
-        {
-            warehouse[position].place[0]=item.placeH;
-            warehouse[position].place[1]=item.placeW;
-            return warehouse[position];
+    if(position != null){
+        var shippingPrice;
+        warehouse[position].place[0]=placeH;
+        warehouse[position].place[1]=placeW;
+        var fromH = warehouse[position].place[0];
+        var fromW = warehouse[position].place[1];
+        var distance = Math.abs(fromH-placeH)+Math.abs(fromW-placeW);
+        
+        if(distance <= 6){
+            shippingPrice = "economic";
+        }else{
+            if(distance > 12){
+                shippingPrice = "expensive";
+            }else{
+                shippingPrice = "standard";
+            }
         }
-    else
+        return shippingPrice;
+    }else{
         return null;
+    }
 }
 
 //export functions
