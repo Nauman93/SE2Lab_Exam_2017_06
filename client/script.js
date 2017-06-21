@@ -89,4 +89,16 @@ $(document).ready(function()
 		},
 		"json");
 	});
+
+	$("#btn7").click(function(){
+		$.post(baseAddress + "/halfpriceItem",
+		{			
+			boxSize: "L"
+		},
+		function(data, status){
+			alert("Status: " + status);
+            console.log(data);
+		},
+		"json");
+	});
 });

@@ -121,6 +121,32 @@ paths:
                 type: integer
         400:
           description: Item not sent
+
+  /halfpriceItem:
+    post:
+      summary: halves the price of an item
+      consumes:
+        - application/x-www-form-urlencoded
+      description: it returns the description of the item modified
+      parameters:
+        - name: boxSize
+          in: formData
+          description: boxSize of the item
+          required: true
+          type: string
+      responses:
+        200:
+          description: ack insertion
+          schema: 
+              $ref: "#/definitions/item"
+        406:
+          description: boxSize of error, parameters are not correct 
+          schema: 
+            properties:
+              error:
+                type: integer
+        400:
+          description: Item not inserted
           
 definitions:
   item:

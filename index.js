@@ -293,6 +293,65 @@ app.post('/sendItem', function(request, response)
 
 });
 
+/**
+ * @brief halves the price of an item
+ * @return the item modified
+ */
+app.post('/halfpriceItem', function(request, response) 
+{	
+	var headers = {};
+	headers["Access-Control-Allow-Origin"] = "*";
+	headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
+	headers["Access-Control-Allow-Credentials"] = false;
+	headers["Access-Control-Max-Age"] = '86400'; // 24 hours
+	headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept";
+	headers["Content-Type"] = "application/json";
+
+	var itemBoxSize;
+
+	//check body and parameters
+	if ( typeof request.body !== 'undefined' && request.body)
+	{
+		if ( typeof request.body.boxSize !== 'undefined' && request.body.boxSize )
+            {
+			 itemBoxSize = request.body.boxSize;
+            }
+		else 
+			itemBoxSize = "undefined";
+	}
+	else
+	{
+		itemBoxSize = "body undefined";
+	}
+    
+    if (itemBoxSize!="undefined" && itemBoxSize!="body undefined")
+	{
+		//aceptable input
+
+        var result=shopManager.halfpriceItem(itemBoxSize);
+		
+		//if insertion works correctly
+		if (result)
+		{
+			response.writeHead(200, headers);
+			response.end(JSON.stringify(result));
+		}
+		else
+		{
+			response.writeHead(400, headers);
+			response.end(JSON.stringify());
+		}
+
+	}
+    else    
+	{
+		//unaceptable input
+		response.writeHead(406, headers);
+		response.end(JSON.stringify("1"));
+	}   
+
+});
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });

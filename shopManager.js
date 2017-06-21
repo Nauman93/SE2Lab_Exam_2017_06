@@ -154,9 +154,29 @@ var sendItem = function sendItem(itemID, placeH, placeW){
     }
 }
 
+/**
+ * @brief This function halves the price of given boxSize
+ * @param boxSize
+ * @return the item if it is modified, null if the item does not exist
+ */
+var halfpriceItem = function halfpriceItem(boxSize){    
+    
+    if(boxSize != null){
+        for (i=0; i < warehouse.length; i++){
+            if (warehouse[i].boxSize == boxSize){
+                warehouse[i].price = warehouse[i].price / 2;
+            }
+        }
+        return warehouse[i];
+    }else{
+        return null;
+    }
+}
+
 //export functions
 exports.getWarehouse = getWarehouse; 
 exports.searchItem = searchItem; 
 exports.sellItem = sellItem; 
 exports.restockItem = restockItem;
 exports.sendItem = sendItem;
+exports.halfpriceItem = halfpriceItem;
